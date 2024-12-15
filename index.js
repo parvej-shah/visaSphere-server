@@ -46,6 +46,11 @@ async function run() {
         const result = await addedVisaCollection.insertOne(newVisa);
         res.send(result);
       })
+      app.get('/visas',async (req,res)=>{
+        const cursor = addedVisaCollection.find().limit(6);
+        const result = await cursor.toArray();
+        res.send(result);
+      })
   } finally {
     // Ensures that the client will close when you finish/error
     /* await client.close(); */
