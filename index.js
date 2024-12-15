@@ -51,6 +51,11 @@ async function run() {
         const result = await cursor.toArray();
         res.send(result);
       })
+      app.get('/all-visas',async (req,res)=>{
+        const cursor = addedVisaCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+      })
   } finally {
     // Ensures that the client will close when you finish/error
     /* await client.close(); */
