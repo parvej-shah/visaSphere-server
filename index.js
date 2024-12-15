@@ -56,6 +56,13 @@ async function run() {
         const result = await cursor.toArray();
         res.send(result);
       })
+      app.get('/visas/:email',async (req,res)=>{
+        const email = req.params.email;
+        const query = {addedBy:email};
+        const cursor = addedVisaCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      })
       app.get('/all-visas/:id',async(req,res)=>{
         const id = req.params.id;
         console.log("Please find from database", id);
