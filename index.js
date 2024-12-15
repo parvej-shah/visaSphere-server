@@ -78,6 +78,13 @@ async function run() {
         const result = await visaApplicationCollection.insertOne(newVisa);
         res.send(result);
       })
+      app.delete('/visas/:id',async(req,res)=>{
+        const id = req.params.id;
+        console.log("Please delete from database", id);
+        const query = {_id:new ObjectId(id)};
+        const result = await addedVisaCollection.deleteOne(query);
+        res.send(result);
+      })
   } finally {
     // Ensures that the client will close when you finish/error
     /* await client.close(); */
