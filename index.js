@@ -34,9 +34,16 @@ async function run() {
     app.post('/users',async(req,res)=>{
         const user = req.body;
         console.log('new user',user);
-        console.log("Headers:", req.headers); // Check headers
-        console.log("Body:", req.body); // Check request body
+        //console.log("Headers:", req.headers);
+        //console.log("Body:", req.body);
         const result = await userCollection.insertOne(user);
+        res.send(result);
+      })
+    app.post('/visas/addvisa',async(req,res)=>{
+        const newVisa = req.body;
+        //console.log("Headers:", req.headers);
+        console.log("Body:", req.body);
+        const result = await addedVisaCollection.insertOne(newVisa);
         res.send(result);
       })
   } finally {
