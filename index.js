@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // Mongo DB Connections
 const uri = "mongodb+srv://parvejshahlabib007:bAsNONsEHNcaBbHY@newcluster.n9akf.mongodb.net/?retryWrites=true&w=majority&appName=newCluster";
 
@@ -54,6 +54,14 @@ async function run() {
       app.get('/all-visas',async (req,res)=>{
         const cursor = addedVisaCollection.find();
         const result = await cursor.toArray();
+        res.send(result);
+      })
+      app.get('/all-visas/:id',async(req,res)=>{
+        const id = req.params.id;
+        console.log("Please find from database", id);
+        const query = {_id:new ObjectId(id)};
+        const result = await addedVisaCollection.findOne(query);
+        console.log(result)
         res.send(result);
       })
   } finally {
