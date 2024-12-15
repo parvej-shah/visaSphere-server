@@ -28,7 +28,7 @@ async function run() {
     // Send a ping to confirm a successful connection
     const userCollection = client.db("visaDB").collection("user");
     const addedVisaCollection = client.db("visaDB").collection("addedVisa");
-    const appliedVisaCollection = client.db("visaDB").collection("appliedVisa");
+    const visaApplicationCollection = client.db("visaDB").collection("visaApplication");
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     app.post('/users',async(req,res)=>{
@@ -62,6 +62,13 @@ async function run() {
         const query = {_id:new ObjectId(id)};
         const result = await addedVisaCollection.findOne(query);
         console.log(result)
+        res.send(result);
+      })
+      app.post('/applications',async(req,res)=>{
+        const newVisa = req.body;
+        //console.log("Headers:", req.headers);
+        console.log("Body:", req.body);
+        const result = await visaApplicationCollection.insertOne(newVisa);
         res.send(result);
       })
   } finally {
