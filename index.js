@@ -66,6 +66,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.get("/applications/:email", async (req, res) => {
+      const email = req.params.email;
+      console.log(email)
+      const query = {applicantsEmail: email };
+      const cursor = visaApplicationCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     app.get("/all-visas/:id", async (req, res) => {
       const id = req.params.id;
       console.log("Please find from database", id);
@@ -88,6 +96,13 @@ async function run() {
       const result = await addedVisaCollection.deleteOne(query);
       res.send(result);
     });
+    /* app.delete("/applications/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("Please delete from database", id);
+      const query = { _id: new ObjectId(id) };
+      const result = await addedVisaCollection.deleteOne(query);
+      res.send(result);
+    }); */
     app.put("/visas/:id", async (req, res) => {
       const id = req.params.id;
       const updatedVisa = req.body;
