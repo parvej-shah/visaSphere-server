@@ -5,7 +5,7 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 // Mongo DB Connections
 const uri =
-  "mongodb+srv://parvejshahlabib007:bAsNONsEHNcaBbHY@newcluster.n9akf.mongodb.net/?retryWrites=true&w=majority&appName=newCluster";
+ `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@newcluster.n9akf.mongodb.net/?retryWrites=true&w=majority&appName=newCluster`;
 
 // Middleware Connections
 app.use(cors());
@@ -36,16 +36,11 @@ async function run() {
     );
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log("new user", user);
-      //console.log("Headers:", req.headers);
-      //console.log("Body:", req.body);
       const result = await userCollection.insertOne(user);
       res.send(result);
     });
     app.post("/visas/addvisa", async (req, res) => {
       const newVisa = req.body;
-      //console.log("Headers:", req.headers);
-      console.log("Body:", req.body);
       const result = await addedVisaCollection.insertOne(newVisa);
       res.send(result);
     });
@@ -68,7 +63,6 @@ async function run() {
     });
     app.get("/applications/:email", async (req, res) => {
       const email = req.params.email;
-      console.log(email)
       const query = {applicantsEmail: email };
       const cursor = visaApplicationCollection.find(query);
       const result = await cursor.toArray();
@@ -76,29 +70,23 @@ async function run() {
     });
     app.get("/all-visas/:id", async (req, res) => {
       const id = req.params.id;
-      console.log("Please find from database", id);
       const query = { _id: new ObjectId(id) };
       const result = await addedVisaCollection.findOne(query);
-      console.log(result);
       res.send(result);
     });
     app.post("/applications", async (req, res) => {
       const newVisa = req.body;
-      //console.log("Headers:", req.headers);
-      console.log("Body:", req.body);
       const result = await visaApplicationCollection.insertOne(newVisa);
       res.send(result);
     });
     app.delete("/visas/:id", async (req, res) => {
       const id = req.params.id;
-      console.log("Please delete from database", id);
       const query = { _id: new ObjectId(id) };
       const result = await addedVisaCollection.deleteOne(query);
       res.send(result);
     });
     app.delete("/applications/:id", async (req, res) => {
       const id = req.params.id;
-      console.log("Please delete from database", id);
       const query = { _id: new ObjectId(id) };
       const result = await visaApplicationCollection.deleteOne(query);
       res.send(result);
@@ -106,7 +94,6 @@ async function run() {
     app.put("/visas/:id", async (req, res) => {
       const id = req.params.id;
       const updatedVisa = req.body;
-      console.log("Please update from database", id);
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
       // Specify the update to set a value for the plot field
