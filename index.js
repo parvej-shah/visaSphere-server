@@ -23,14 +23,14 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
     const userCollection = client.db("visaDB").collection("user");
     const addedVisaCollection = client.db("visaDB").collection("addedVisa");
     const visaApplicationCollection = client
       .db("visaDB")
       .collection("visaApplication");
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
@@ -128,7 +128,9 @@ async function run() {
 run().catch(console.dir);
 
 // Routes
-
+app.get("/",(req, res) => {
+  res.send("VisaSphere is running");
+});
 // Connection
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
